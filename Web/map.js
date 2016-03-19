@@ -15,12 +15,16 @@ function initMap() {
 
 var pusher = new Pusher('90328f0186c7537be223', {
       cluster: 'eu',
-      encrypted: true
+      encrypted: true,
+	  authTransport: 'jsonp',
+	  authEndpoint: 'http://dump.nevett.me/hack24/auth.php'
     });
 
-var channel = pusher.subscribe("bite");
+var channel = pusher.subscribe('private-bite');
 
 var markers = {};
+
+var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
 channel.bind('player-moved', function(data) {
 	var lat = data.lat;
@@ -29,8 +33,8 @@ channel.bind('player-moved', function(data) {
 	console.log(data);
 	if (!marker) {
 		marker = markers[data.playerId] = new google.maps.Marker({
-			//position: {lat: lat, lng: lng},
-			map: map
+			map: map,
+			icon: image
 		});
 	}
 	

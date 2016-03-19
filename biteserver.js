@@ -33,7 +33,7 @@ setInterval(function(){
 	players.forEach(function(player){
 		player.location.lat += maxJitter * (Math.random() * 2 - 1);
 		player.location.lng += maxJitter * (Math.random() * 2 - 1);
-		pusher.trigger('bite', 'player-moved', {playerId: player.id, lat: player.location.lat, lng: player.location.lng});
+		pusher.trigger('private-bite', 'player-moved', {playerId: player.id, lat: player.location.lat, lng: player.location.lng});
 	});
 
 	//console.log({playerId: 1, lat: lat, lng: lng});
