@@ -1,6 +1,7 @@
 function initMap() {
 	window.map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: 52.953350, lng: -1.150350},
+		disableDefaultUI: true,
 		zoom: 19,
 		styles: [{
 			featureType: 'poi',
