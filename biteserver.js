@@ -29,30 +29,30 @@ var zones = [];
 var safeZones = [
 	{
 		center: {lat: 52.954187, lng: -1.149632},
-		zoneSize: 30
+		zoneSize: 10
 	},
 	{
 		center: {lat: 52.953449, lng: -1.148950},
-		zoneSize: 50
+		zoneSize: 15
 	},
 	{
 		center: {lat: 52.953118, lng: -1.150597},
-		zoneSize: 30
+		zoneSize: 15
 	}
 ];
 
 var powerUpZones = [
 	{
 		center: {lat: 52.953412, lng: -1.149951},
-		zoneSize: 30
+		zoneSize: 10
 	},
 	{
 		center: {lat: 52.953600, lng: -1.151644},
-		zoneSize: 50
+		zoneSize: 15
 	},
 	{
 		center: {lat: 52.953792, lng: -1.148353},
-		zoneSize: 30
+		zoneSize: 15
 	}
 ];
 var zoneId = 0;
@@ -96,11 +96,13 @@ channel.bind('client-used-powerup', function(data){
 });
 
 channel.bind('client-infected', function(data){
-	if (!playersById[player.playerId]) return;
-	if (!playersById[player.zombieId]) return;
-	
-	playersById[player.playerId].state = PlayerState.Zombie;
-	playersById[player.playerId].infections++;
+	var zom = playersById[player.zombieId];
+	var hum = playersById[player.playerId];
+	if (!zom || !hum) return;
+	if (hum.safe) return;
+	hum.state = PlayerState.Zombie;
+	zom.infections++;
+	console.log(zom.name + ' infected ' + hum.name);
 });
 
 function isPointWithin(checkPoint, centerPoint, m) {
@@ -133,7 +135,7 @@ function getZonesPlayerIn(player)
 
 function Player(id, name)
 {
-	this.state = PlayerState.Human;
+	this.state = players.length ?  PlayerState.Human : PlayerState.Zombie;
 	this.location = { lng: 0, lat: 0 };
 	this.name = name;
 	this.id = id;
@@ -161,6 +163,20 @@ function Player(id, name)
 			});
 		}
 	};
+	this.usePowerup = function() {
+		console.log(this.name + ' used ' + this.powerUp + ' power-up');
+		if (this.powerUp == 'shield') {
+			
+		} else if (this.powerUp == 'bomb') {
+			var victims = getPlayersInRadius(this.location.lat, this.location.lng, 15);
+			var zom = this;
+			victims.forEach(function(victim){
+				victim.state = PlayerState.Zombie;
+				zom.infections++;
+			});
+		}
+		this.powerUp = null;
+	}
 	this.getStateData = function() {
 		return { 
 			id: this.id,
