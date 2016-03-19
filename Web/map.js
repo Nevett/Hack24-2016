@@ -38,6 +38,11 @@ function initMap() {
 	};
 
 	channel.bind('game-update', function(data) {	
+		var humanTable = $('.human-col tbody');
+		var zombieTable = $('.zombie-col tbody');
+		humanTable.empty();
+		zombieTable.empty();
+	
 		data.players.forEach(function (player){
 			var lat = player.location.lat;
 			var lng  = player.location.lng;
@@ -50,6 +55,12 @@ function initMap() {
 				});
 			}
 			marker.setPosition( new google.maps.LatLng( lat, lng ) );
+			
+			if (player.state == 1) {
+				humanTable.append($('<tr><td>' + player.name + '</td></tr>'));
+			} else {
+				zombieTable.append($('<tr><td>' + player.name + '</td><td>' + player.infections + '</td></tr>'));
+			}
 		});
 
 		data.zones.forEach(function (zoneData){
