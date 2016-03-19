@@ -25,16 +25,16 @@ function initMap() {
 
 	var human = { 
 		url: 'human.png', 
-		size: new google.maps.Size(115, 115),
-		scaledSize: new google.maps.Size(25, 25)
+		size: new google.maps.Size(128, 128),
+		scaledSize: new google.maps.Size(64, 64)
 	};
 	var zombie = { 
 		url: 'zombie.png', 
-		size: new google.maps.Size(101, 101),
-		scaledSize: new google.maps.Size(25, 25)
+		size: new google.maps.Size(128, 128),
+		scaledSize: new google.maps.Size(64, 64)
 	};
 
-	channel.bind('player-moved', function(data) {
+	channel.bind('client-player-moved', function(data) {
 		var lat = data.lat;
 		var lng  = data.lng;
 		var marker = markers[data.playerId];
