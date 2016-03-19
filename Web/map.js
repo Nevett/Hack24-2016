@@ -36,7 +36,7 @@ function initMap() {
 		anchor: new google.maps.Point(32, 32)
 	};
 
-	channel.bind('client-player-moved', function(data) {
+	channel.bind('player-moved', function(data) {
 		var lat = data.lat;
 		var lng  = data.lng;
 		var marker = markers[data.playerId];
