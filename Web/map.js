@@ -26,12 +26,14 @@ function initMap() {
 	var human = { 
 		url: 'human.png', 
 		size: new google.maps.Size(128, 128),
-		scaledSize: new google.maps.Size(64, 64)
+		scaledSize: new google.maps.Size(64, 64),
+		anchor: new google.maps.Point(32, 32)
 	};
 	var zombie = { 
 		url: 'zombie.png', 
 		size: new google.maps.Size(128, 128),
-		scaledSize: new google.maps.Size(64, 64)
+		scaledSize: new google.maps.Size(64, 64),
+		anchor: new google.maps.Point(32, 32)
 	};
 
 	channel.bind('client-player-moved', function(data) {
