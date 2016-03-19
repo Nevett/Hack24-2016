@@ -20,15 +20,21 @@ var pusher = new Pusher('90328f0186c7537be223', {
 
 var channel = pusher.subscribe("bite");
 
+var markers = {};
+
 channel.bind('player-moved', function(data) {
-  var lat = data.lat;
-  var lng  = data.lng;
-
-  var marker = new google.maps.Marker({
-    position: {lat: lat, lng: lng},
-    map: map
-  });
-
+	var lat = data.lat;
+	var lng  = data.lng;
+	var marker = markers[data.playerId];
+	console.log(data);
+	if (!marker) {
+		marker = markers[data.playerId] = new google.maps.Marker({
+			//position: {lat: lat, lng: lng},
+			map: map
+		});
+	}
+	
+	marker.setPosition( new google.maps.LatLng( lat, lng ) );
 });
 
 
