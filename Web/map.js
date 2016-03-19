@@ -8,15 +8,21 @@ function initMap() {
 		}, {
 			featureType: 'transit.station',
 			stylers: [{ visibility: 'off' }]  // Turn off bus stations, train stations, etc.
+		}, {
+			featureType: 'all',
+			stylers: [{ invert_lightness: true},
+						{saturation: 50},
+						{lightness: -8},
+						{weight: 3 }] 
 		}],
 		disableDoubleClickZoom: true
 	});
 
 	var pusher = new Pusher('90328f0186c7537be223', {
-		  cluster: 'eu',
-		  encrypted: true,
-		  authTransport: 'jsonp',
-		  authEndpoint: 'http://dump.nevett.me/hack24/auth.php'
+			cluster: 'eu',
+			encrypted: true,
+			authTransport: 'jsonp',
+			authEndpoint: 'http://dump.nevett.me/hack24/auth.php'
 		});
 
 	var channel = pusher.subscribe('private-bite');
@@ -53,26 +59,20 @@ function initMap() {
 		});
 
 		data.zones.forEach(function (zoneData){
-
-			var zone = zones[zoneData.id]
-
+			var zone = zones[zoneData.id];
 			if (!zone){	
-
-				var colour = zoneData.type === "safe" ? "#00ff00" : "#daa520";
-
+				var colour = zoneData.type === "safe" ? "#00ff00" : "#0000cd";
 			 	zones[zoneData.id] = new google.maps.Circle({
-			      strokeColor: colour,
-			      strokeOpacity: 0.8,
-			      strokeWeight: 2,
-			      fillColor: colour,
-			      fillOpacity: 0.15,
-			      map: map,
-			      center: zoneData.center,
-			      radius: Math.sqrt(zoneData.zoneSize) 
+			      	strokeColor: colour,
+			      	strokeOpacity: 0.8,
+			      	strokeWeight: 2,
+			      	fillColor: colour,
+			      	fillOpacity: 0.15,
+			      	map: map,
+			      	center: zoneData.center,
+			      	radius: zoneData.zoneSize
     			});
-
 			}
-
 		});
 	});
 }
