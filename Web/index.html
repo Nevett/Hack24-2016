@@ -2,15 +2,61 @@
 <html>
   <head>
     <style type="text/css">
-      html, body { height: 100%; margin: 0; padding: 0; }
-      #map { height: 100%; }
+      html, body { height: 100%; margin: 0; padding: 0; background-color: black; font-family: sans-serif; }
+      #map, #scores { height: 50%; }
+	  table
+	  {
+		width: 100%;
+		th
+		{
+		}
+	  }
+		.human-col
+		{ 
+			float: left;
+			width: 50%;
+			color: #13ADC2;
+		}
+	  
+		.zombie-col
+		{ 
+			float: left;
+			width: 50%; 
+			color: #E94B81;
+		}
     </style>
   </head>
   <body>
     <div id="map"></div>
-
+	<div id="scores">
+		<div class="human-col">
+			<h1>Humans</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+		<div class="zombie-col">
+			<h1>Zombies</h1>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Infections</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+	</div>
     <script src="https://js.pusher.com/3.0/pusher.min.js"></script>
-
+	<script src="https://code.jquery.com/jquery-1.12.2.min.js"></script>
     <script src="map.js"> </script>
     
     <script
